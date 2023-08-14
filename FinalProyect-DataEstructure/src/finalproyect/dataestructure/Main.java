@@ -4,9 +4,11 @@
  */
 package finalproyect.dataestructure;
 
+import LISTAS_CIRCULARES.*;
+
 /**
  *
- * @author Usuario
+ * @author User
  */
 public class Main {
 
@@ -16,6 +18,70 @@ public class Main {
     public static void main(String[] args) {
         LoginInterface interfacejuego = new LoginInterface();
         interfacejuego.setVisible(true); 
+        
+        
+//        Lista lis = new Lista();
+//        Ingredientes ing =new Ingredientes();
+//        
+//        lis.inserta(new Ingredientes(1,ing.IngredienteAleatorio()));
+//        lis.inserta(new Ingredientes(2,ing.IngredienteAleatorio()));
+//        lis.inserta(new Ingredientes(3,ing.IngredienteAleatorio()));
+//        lis.inserta(new Ingredientes(4,ing.IngredienteAleatorio()));
+//        lis.inserta(new Ingredientes(5,ing.IngredienteAleatorio()));
+//
+//        Ingredientes ingAux;
+//        
+//        if(elimina)
+//        {
+//            if(buscar()){
+//                modifica()
+//            }
+//                
+//        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        System.out.println(lis);
+//        
+//        
+//        System.out.println("---------------------------");
+//        
+//        lis.mueveIzq();
+//        
+//        System.out.println(lis); 
+//        
+//        System.out.println("---------------------------");
+//        
+//        lis.mueveIzq();
+//        
+//        System.out.println(lis);
+//        System.out.println("---------------------------");
+//        
+//        lis.mueveIzq();
+//        
+//        System.out.println(lis);
+//        System.out.println(lis);
+//        System.out.println("---------------------------");
+//        
+//        lis.mueveIzq();
+//        
+//        System.out.println(lis);
+//        System.out.println(lis);
+//        System.out.println("---------------------------");
+//        
+//        lis.mueveIzq();
+//        
+//        System.out.println(lis);
+        
+        
     }
     
 }

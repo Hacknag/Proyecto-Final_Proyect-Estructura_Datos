@@ -6,7 +6,7 @@ package COLAS;
 
 /**
  *
- * @author joseriveratencio
+ *@author User
  */
 public class Cola {
     private Nodo frente;

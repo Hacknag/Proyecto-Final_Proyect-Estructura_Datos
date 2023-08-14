@@ -1,10 +1,14 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt 
+to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit 
+this template
  */
 package finalproyect.dataestructure;
-import COLAS.*;
 
+import COLAS.*;
+import LISTAS_CIRCULARES.*;
+import PILAS.*;
 
 
 import java.awt.event.ActionEvent;
@@ -19,25 +23,42 @@ import javax.swing.Timer;
  */
 public class GameInterface extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GameInterface
-     */
     public GameInterface() {
         initComponents();
         this.setLocationRelativeTo(null);
         TimerLbl.setText("05:00");
+
+        //inserta los 5 ingredientes
+        lis.inserta(new Ingredientes(1, ing.IngredienteAleatorio()));
+        lis.inserta(new Ingredientes(2, ing.IngredienteAleatorio()));
+        lis.inserta(new Ingredientes(3, ing.IngredienteAleatorio()));
+        lis.inserta(new Ingredientes(4, ing.IngredienteAleatorio()));
+        lis.inserta(new Ingredientes(5, ing.IngredienteAleatorio()));
+
+        //asigna los labels de ingredientes
+        actualizaringredientes();
         downTimer();
         timer.start();
     }
 
+    //variables
+    String[][] tiposIngredientes;
     Timer timer;
     int second = 0;
     int minute = 5;
     String ddSecond, ddMinute;
     DecimalFormat dFormat = new DecimalFormat("00");
 
-    public void downTimer() {       
+    Lista lis = new Lista();
+    Ingredientes ing = new Ingredientes();
+
+    Ingredientes ingAux = new Ingredientes();
+
+    //funciones
+    public void downTimer() {
+
         timer = new Timer(1000, new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 second--;
@@ -54,7 +75,7 @@ public class GameInterface extends javax.swing.JFrame {
                 }//if
                 if (minute == 0 && second == 0) {
                     timer.stop();
-                    
+
                     System.exit(0);
                 }
             }
@@ -63,6 +84,17 @@ public class GameInterface extends javax.swing.JFrame {
 
     }//downTimer
 
+    public void actualizaringredientes() {
+        tiposIngredientes = lis.obtenerTiposIngredientes();
+
+        ingrediente1Label.setText(tiposIngredientes[0][1]);
+        ingrediente2Label.setText(tiposIngredientes[1][1]);
+        ingrediente3Label.setText(tiposIngredientes[2][1]);
+        ingrediente4Label.setText(tiposIngredientes[3][1]);
+        ingrediente5Label.setText(tiposIngredientes[4][1]);
+    }//actualizar ingredientes
+
+    /*-----------------------NO TOCAR------------------*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -74,6 +106,12 @@ public class GameInterface extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         TimerLbl = new javax.swing.JLabel();
+        ingrediente5Label = new javax.swing.JLabel();
+        LabelBasurero = new javax.swing.JLabel();
+        ingrediente2Label = new javax.swing.JLabel();
+        ingrediente3Label = new javax.swing.JLabel();
+        ingrediente4Label = new javax.swing.JLabel();
+        ingrediente1Label = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -81,12 +119,77 @@ public class GameInterface extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 450));
         jPanel1.setLayout(null);
 
+        TimerLbl.setBackground(new java.awt.Color(255, 255, 255));
         TimerLbl.setFont(new java.awt.Font("Segoe UI Black", 2, 14)); // NOI18N
         TimerLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TimerLbl.setText("Timer");
         TimerLbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         jPanel1.add(TimerLbl);
         TimerLbl.setBounds(710, 10, 80, 40);
+
+        ingrediente5Label.setForeground(new java.awt.Color(255, 255, 255));
+        ingrediente5Label.setText("jLabel2");
+        ingrediente5Label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ingrediente5LabelMouseClicked(evt);
+            }
+        });
+        jPanel1.add(ingrediente5Label);
+        ingrediente5Label.setBounds(730, 250, 37, 16);
+
+        LabelBasurero.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        LabelBasurero.setForeground(new java.awt.Color(204, 0, 0));
+        LabelBasurero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelBasurero.setText("           Basurero");
+        LabelBasurero.setToolTipText("");
+        LabelBasurero.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        LabelBasurero.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LabelBasureroMouseClicked(evt);
+            }
+        });
+        jPanel1.add(LabelBasurero);
+        LabelBasurero.setBounds(600, 350, 200, 90);
+
+        ingrediente2Label.setForeground(new java.awt.Color(255, 255, 255));
+        ingrediente2Label.setText("jLabel2");
+        ingrediente2Label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ingrediente2LabelMouseClicked(evt);
+            }
+        });
+        jPanel1.add(ingrediente2Label);
+        ingrediente2Label.setBounds(580, 250, 37, 16);
+
+        ingrediente3Label.setForeground(new java.awt.Color(255, 255, 255));
+        ingrediente3Label.setText("jLabel2");
+        ingrediente3Label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ingrediente3LabelMouseClicked(evt);
+            }
+        });
+        jPanel1.add(ingrediente3Label);
+        ingrediente3Label.setBounds(630, 250, 37, 16);
+
+        ingrediente4Label.setForeground(new java.awt.Color(255, 255, 255));
+        ingrediente4Label.setText("jLabel2");
+        ingrediente4Label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ingrediente4LabelMouseClicked(evt);
+            }
+        });
+        jPanel1.add(ingrediente4Label);
+        ingrediente4Label.setBounds(680, 250, 37, 16);
+
+        ingrediente1Label.setForeground(new java.awt.Color(255, 255, 255));
+        ingrediente1Label.setText("jLabel2");
+        ingrediente1Label.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ingrediente1LabelMouseClicked(evt);
+            }
+        });
+        jPanel1.add(ingrediente1Label);
+        ingrediente1Label.setBounds(530, 250, 37, 16);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/GameBackground.PNG"))); // NOI18N
         jPanel1.add(jLabel1);
@@ -105,6 +208,53 @@ public class GameInterface extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void LabelBasureroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LabelBasureroMouseClicked
+        // TODO add your handling code here:
+        if (ingAux.getTipo() != null) {
+            lis.botar(ingAux);
+            lis.mueveIzq();
+            lis.contarIngredientesNoVacios();
+            actualizaringredientes();
+            ingAux = new Ingredientes();
+        } 
+   
+    }//GEN-LAST:event_LabelBasureroMouseClicked
+
+    private void ingrediente1LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingrediente1LabelMouseClicked
+        // TODO add your handling code here:
+        ingAux.setId(Integer.parseInt(tiposIngredientes[0][0]));
+        ingAux.setTipo(tiposIngredientes[0][1]);
+        JOptionPane.showMessageDialog(null, ingAux);
+    }//GEN-LAST:event_ingrediente1LabelMouseClicked
+
+    private void ingrediente2LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingrediente2LabelMouseClicked
+        // TODO add your handling code here:
+        ingAux.setId(Integer.parseInt(tiposIngredientes[1][0]));
+        ingAux.setTipo(tiposIngredientes[1][1]);
+        JOptionPane.showMessageDialog(null, ingAux);
+    }//GEN-LAST:event_ingrediente2LabelMouseClicked
+
+    private void ingrediente3LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingrediente3LabelMouseClicked
+        // TODO add your handling code here:
+        ingAux.setId(Integer.parseInt(tiposIngredientes[2][0]));
+        ingAux.setTipo(tiposIngredientes[2][1]);
+        JOptionPane.showMessageDialog(null, ingAux);
+    }//GEN-LAST:event_ingrediente3LabelMouseClicked
+
+    private void ingrediente4LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingrediente4LabelMouseClicked
+        // TODO add your handling code here:
+        ingAux.setId(Integer.parseInt(tiposIngredientes[3][0]));
+        ingAux.setTipo(tiposIngredientes[3][1]);
+        JOptionPane.showMessageDialog(null, ingAux);
+    }//GEN-LAST:event_ingrediente4LabelMouseClicked
+
+    private void ingrediente5LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingrediente5LabelMouseClicked
+        // TODO add your handling code here:
+        ingAux.setId(Integer.parseInt(tiposIngredientes[4][0]));
+        ingAux.setTipo(tiposIngredientes[4][1]);
+        JOptionPane.showMessageDialog(null, ingAux);
+    }//GEN-LAST:event_ingrediente5LabelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -142,7 +292,13 @@ public class GameInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel LabelBasurero;
     private javax.swing.JLabel TimerLbl;
+    private javax.swing.JLabel ingrediente1Label;
+    private javax.swing.JLabel ingrediente2Label;
+    private javax.swing.JLabel ingrediente3Label;
+    private javax.swing.JLabel ingrediente4Label;
+    private javax.swing.JLabel ingrediente5Label;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

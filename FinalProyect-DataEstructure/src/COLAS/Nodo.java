@@ -6,7 +6,7 @@ package COLAS;
 
 /**
  *
- * @author joseriveratencio
+ *@author User
  */
 public class Nodo {
     private Dispositivo dato;
