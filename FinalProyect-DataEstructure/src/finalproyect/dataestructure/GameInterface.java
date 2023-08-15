@@ -10,7 +10,6 @@ import COLAS.*;
 import LISTAS_CIRCULARES.*;
 import PILAS.*;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
@@ -43,6 +42,7 @@ public class GameInterface extends javax.swing.JFrame {
 
     //variables
     String[][] tiposIngredientes;
+    String[] ingPreparacion;
     Timer timer;
     int second = 0;
     int minute = 5;
@@ -51,6 +51,7 @@ public class GameInterface extends javax.swing.JFrame {
 
     Lista lis = new Lista();
     Ingredientes ing = new Ingredientes();
+    Pila pilaPreparar = new Pila();
 
     Ingredientes ingAux = new Ingredientes();
 
@@ -94,6 +95,46 @@ public class GameInterface extends javax.swing.JFrame {
         ingrediente5Label.setText(tiposIngredientes[4][1]);
     }//actualizar ingredientes
 
+    public void actualizarpreparacion() {
+        pilaPreparar.listar(); //Para pruebas
+        ingPreparacion = pilaPreparar.obtenerIngredientespreparacion();
+        switch (ingPreparacion.length) {
+            case 1:
+                labelpreparar1.setText(ingPreparacion[0]);
+                break;
+            case 2:
+                labelpreparar1.setText(ingPreparacion[0]);
+                labelpreparar2.setText(ingPreparacion[1]);
+                break;
+            case 3:
+                labelpreparar1.setText(ingPreparacion[0]);
+                labelpreparar2.setText(ingPreparacion[1]);
+                labelpreparar3.setText(ingPreparacion[2]);
+                break;
+            case 4:
+                labelpreparar1.setText(ingPreparacion[0]);
+                labelpreparar2.setText(ingPreparacion[1]);
+                labelpreparar3.setText(ingPreparacion[2]);
+                labelpreparar4.setText(ingPreparacion[3]);
+                break;
+            case 5:
+                labelpreparar1.setText(ingPreparacion[0]);
+                labelpreparar2.setText(ingPreparacion[1]);
+                labelpreparar3.setText(ingPreparacion[2]);
+                labelpreparar4.setText(ingPreparacion[3]);
+                labelpreparar5.setText(ingPreparacion[4]);
+                break;
+            default:
+                labelpreparar1.setText("");
+                labelpreparar2.setText("");
+                labelpreparar3.setText("");
+                labelpreparar4.setText("");
+                labelpreparar5.setText("");
+                break;
+        }
+
+    }//actualizar preparación
+
     /*-----------------------NO TOCAR------------------*/
     /**
      * This method is called from within the constructor to initialize the form.
@@ -108,10 +149,17 @@ public class GameInterface extends javax.swing.JFrame {
         TimerLbl = new javax.swing.JLabel();
         ingrediente5Label = new javax.swing.JLabel();
         LabelBasurero = new javax.swing.JLabel();
+        labelPlato = new javax.swing.JLabel();
         ingrediente2Label = new javax.swing.JLabel();
         ingrediente3Label = new javax.swing.JLabel();
         ingrediente4Label = new javax.swing.JLabel();
         ingrediente1Label = new javax.swing.JLabel();
+        labelpreparar4 = new javax.swing.JLabel();
+        labelpreparar3 = new javax.swing.JLabel();
+        labelpreparar5 = new javax.swing.JLabel();
+        labelpreparar2 = new javax.swing.JLabel();
+        labelpreparar1 = new javax.swing.JLabel();
+        ButtonEntregar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -150,6 +198,18 @@ public class GameInterface extends javax.swing.JFrame {
         });
         jPanel1.add(LabelBasurero);
         LabelBasurero.setBounds(600, 350, 200, 90);
+
+        labelPlato.setBackground(new java.awt.Color(255, 255, 255));
+        labelPlato.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        labelPlato.setForeground(new java.awt.Color(255, 255, 153));
+        labelPlato.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        labelPlato.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelPlatoMouseClicked(evt);
+            }
+        });
+        jPanel1.add(labelPlato);
+        labelPlato.setBounds(220, 240, 80, 20);
 
         ingrediente2Label.setForeground(new java.awt.Color(255, 255, 255));
         ingrediente2Label.setText("jLabel2");
@@ -191,6 +251,50 @@ public class GameInterface extends javax.swing.JFrame {
         jPanel1.add(ingrediente1Label);
         ingrediente1Label.setBounds(530, 250, 37, 16);
 
+        labelpreparar4.setBackground(new java.awt.Color(255, 255, 255));
+        labelpreparar4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        labelpreparar4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(labelpreparar4);
+        labelpreparar4.setBounds(240, 132, 50, 20);
+
+        labelpreparar3.setBackground(new java.awt.Color(255, 255, 255));
+        labelpreparar3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        labelpreparar3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(labelpreparar3);
+        labelpreparar3.setBounds(240, 162, 50, 20);
+
+        labelpreparar5.setBackground(new java.awt.Color(255, 255, 51));
+        labelpreparar5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        labelpreparar5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(labelpreparar5);
+        labelpreparar5.setBounds(240, 102, 50, 20);
+
+        labelpreparar2.setBackground(new java.awt.Color(255, 255, 255));
+        labelpreparar2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        labelpreparar2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(labelpreparar2);
+        labelpreparar2.setBounds(240, 192, 50, 20);
+
+        labelpreparar1.setBackground(new java.awt.Color(255, 255, 255));
+        labelpreparar1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        labelpreparar1.setForeground(new java.awt.Color(255, 255, 153));
+        labelpreparar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(labelpreparar1);
+        labelpreparar1.setBounds(240, 232, 50, 20);
+
+        ButtonEntregar.setBackground(new java.awt.Color(153, 0, 51));
+        ButtonEntregar.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
+        ButtonEntregar.setForeground(new java.awt.Color(255, 255, 255));
+        ButtonEntregar.setText("Entregar");
+        ButtonEntregar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 0)));
+        ButtonEntregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonEntregarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(ButtonEntregar);
+        ButtonEntregar.setBounds(190, 280, 170, 30);
+
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/GameBackground.PNG"))); // NOI18N
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 800, 450);
@@ -217,8 +321,8 @@ public class GameInterface extends javax.swing.JFrame {
             lis.contarIngredientesNoVacios();
             actualizaringredientes();
             ingAux = new Ingredientes();
-        } 
-   
+        }
+
     }//GEN-LAST:event_LabelBasureroMouseClicked
 
     private void ingrediente1LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingrediente1LabelMouseClicked
@@ -256,6 +360,34 @@ public class GameInterface extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, ingAux);
     }//GEN-LAST:event_ingrediente5LabelMouseClicked
 
+    private void labelPlatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelPlatoMouseClicked
+        // TODO add your handling code here:
+        //Aqui se va a elaborar el pedido
+        if (ingAux.getTipo() != null && ingAux.getTipo() != "vacio") {
+            lis.botar(ingAux);
+            lis.mueveIzq();
+            lis.contarIngredientesNoVacios();
+            actualizaringredientes();
+
+            if (pilaPreparar.tamanio() < 5) {
+                pilaPreparar.push(ingAux);
+            }
+
+            ingAux = new Ingredientes();
+            actualizarpreparacion();
+
+        }
+    }//GEN-LAST:event_labelPlatoMouseClicked
+
+    private void ButtonEntregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEntregarActionPerformed
+        // TODO add your handling code here:
+
+        if (!pilaPreparar.Vacia()) {
+            pilaPreparar = new Pila();
+            actualizarpreparacion();
+        }
+    }//GEN-LAST:event_ButtonEntregarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -292,6 +424,7 @@ public class GameInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ButtonEntregar;
     private javax.swing.JLabel LabelBasurero;
     private javax.swing.JLabel TimerLbl;
     private javax.swing.JLabel ingrediente1Label;
@@ -301,5 +434,11 @@ public class GameInterface extends javax.swing.JFrame {
     private javax.swing.JLabel ingrediente5Label;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel labelPlato;
+    private javax.swing.JLabel labelpreparar1;
+    private javax.swing.JLabel labelpreparar2;
+    private javax.swing.JLabel labelpreparar3;
+    private javax.swing.JLabel labelpreparar4;
+    private javax.swing.JLabel labelpreparar5;
     // End of variables declaration//GEN-END:variables
 }

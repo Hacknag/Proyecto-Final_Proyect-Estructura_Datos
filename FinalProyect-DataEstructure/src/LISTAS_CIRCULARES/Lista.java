@@ -17,58 +17,34 @@ public class Lista {
     
     private Ingredientes ing = new Ingredientes();
 
-    public void inserta(Ingredientes p) {
+    public void inserta(Ingredientes i) {
         if (cabeza == null) {
-            cabeza = new Nodo(p);
+            cabeza = new Nodo(i);
             ultimo = cabeza;
-        } else if (p.getId() < cabeza.getDato().getId()) {
-            Nodo nuevoNodo = new Nodo(p);
+        } else if (i.getId() < cabeza.getDato().getId()) {
+            Nodo nuevoNodo = new Nodo(i);
             nuevoNodo.setNext(cabeza);
-            cabeza.setBack(nuevoNodo); // Agregar enlace hacia atrás
+            cabeza.setBack(nuevoNodo); 
             cabeza = nuevoNodo;
-        } else if (ultimo.getDato().getId() <= p.getId()) {
-            ultimo.setNext(new Nodo(p));
-            ultimo.getNext().setBack(ultimo); // Agregar enlace hacia atrás
+        } else if (ultimo.getDato().getId() <= i.getId()) {
+            ultimo.setNext(new Nodo(i));
+            ultimo.getNext().setBack(ultimo);
             ultimo = ultimo.getNext();
         } else {
             Nodo aux = cabeza;
-            while (aux.getNext().getDato().getId() < p.getId()) {
+            while (aux.getNext().getDato().getId() < i.getId()) {
                 aux = aux.getNext();
             }
-            Nodo temp = new Nodo(p);
+            Nodo temp = new Nodo(i);
             temp.setNext(aux.getNext());
-            temp.setBack(aux); // Agregar enlace hacia atrás
+            temp.setBack(aux); 
             aux.setNext(temp);
-            temp.getNext().setBack(temp); // Agregar enlace hacia atrás
+            temp.getNext().setBack(temp); 
         }
         ultimo.setNext(cabeza);
-        cabeza.setBack(ultimo); // Agregar enlace hacia atrás
+        cabeza.setBack(ultimo); 
     }
 
-    public boolean existe(int id) {
-        boolean esta = false;
-        if (cabeza != null) {
-            Nodo aux = cabeza;
-            while (aux != null && aux.getDato().getId() != id) {
-                aux = aux.getNext();
-            }
-            esta = (aux != null && aux.getDato().getId() == id);
-        }
-        return esta;
-    }
-
-    public void modifica(Ingredientes p) {
-        if (cabeza != null) {
-            Nodo aux = cabeza;
-            while (aux != null && aux.getDato().getId() != p.getId()) {
-                aux = aux.getNext();
-            }
-            if (aux != null && aux.getDato().getId() == p.getId()) {
-                aux.getDato().setTipo(p.getTipo());
-            }
-        }
-    }
-    
     public void contarIngredientesNoVacios() {
     int contador = 0;
     Nodo actual = cabeza;
@@ -112,7 +88,7 @@ public class Lista {
         }
     }
     
-    public void mueveIzq() {
+    public void mueveIzq() {//Para que la pila gire al utilizar un ingrediente
         if (cabeza != null) {
             Nodo primero = cabeza;
             Nodo segundo = cabeza.getNext();
@@ -140,53 +116,7 @@ public class Lista {
         }
     }
 
-    public void elimina(int id) {
-        if (cabeza != null) {
-            if (cabeza.getDato().getId() == id) {
-                cabeza = cabeza.getNext();
-                cabeza.setBack(ultimo); // Actualizar enlace hacia atrás
-            } else {
-                Nodo aux = cabeza;
-                while (aux.getNext() != null && aux.getNext().getDato().getId() < id) {
-                    aux = aux.getNext();
-                }
-                if (aux.getNext() != null && aux.getNext().getDato().getId() == id) {
-                    aux.setNext(aux.getNext().getNext());
-                    if (aux.getNext() != null) {
-                        aux.getNext().setBack(aux); // Actualizar enlace hacia atrás
-                    } else {
-                        ultimo = aux; // Actualizar último si se eliminó el último nodo
-                    }
-                }
-            }
-        }
-    }
-
-    public Ingredientes extrae(int id) {
-        Ingredientes p = null;
-        if (cabeza != null) {
-            if (cabeza.getDato().getId() == id) {
-                p = cabeza.getDato();
-                cabeza = cabeza.getNext();
-                cabeza.setBack(ultimo); // Actualizar enlace hacia atrás
-            } else {
-                Nodo aux = cabeza;
-                while (aux.getNext() != null && aux.getNext().getDato().getId() < id) {
-                    aux = aux.getNext();
-                }
-                if (aux.getNext() != null && aux.getNext().getDato().getId() == id) {
-                    p = aux.getNext().getDato();
-                    aux.setNext(aux.getNext().getNext());
-                    if (aux.getNext() != null) {
-                        aux.getNext().setBack(aux); // Actualizar enlace hacia atrás
-                    } else {
-                        ultimo = aux; // Actualizar último si se eliminó el último nodo
-                    }
-                }
-            }
-        }
-        return p;
-    }
+   
 
     public String[][] obtenerTiposIngredientes() {
         ArrayList<String[]> ingredientesList = new ArrayList<>();
@@ -207,129 +137,8 @@ public class Lista {
         return ingredientesArray;
     }
     
-    /*
-    public void inserta(Ingredientes p){
-        if(cabeza==null){
-            cabeza = new Nodo(p);
-            ultimo = cabeza;    
-        }else if(p.getId()<cabeza.getDato().getId()){ //poner al lado izquierdo
-            Nodo nuevoNodo = new Nodo(p);
-            nuevoNodo.setNext(cabeza);
-            cabeza=nuevoNodo;
-        }else if(ultimo.getDato().getId() <= p.getId()){//op derecha
-            ultimo.setNext(new Nodo(p));
-            ultimo =ultimo.getNext();
-            
-        }else{
-           Nodo aux = cabeza;
-           while (aux.getNext().getDato().getId()
-                   <p.getId()){
-               aux=aux.getNext();
-           }
-           Nodo temp = new Nodo(p);
-           temp.setNext(aux.getNext());
-           aux.setNext(temp);
-        } 
-        ultimo.setNext(cabeza);
-        cabeza.setBack(ultimo);
-    }
     
-    public boolean existe (int id){
-        boolean esta = false;
-        //Busca en lista, y retorna true si una persona tiene el id
-        //en la lista
-        if (cabeza != null){
-            //Si hay algo en la lista buscaré
-            Nodo aux = cabeza;
-            //utilizo aux como indice
-
-            //Mientras no se acabe la lista y el elemento
-            //de la lista sea menor que el buscado
-            while (aux.getDato().getId() < id){
-                aux = aux.getNext () ;//avanzo en la lista
-            }
-
-            //verdadero si lo encontró
-            esta = (aux.getDato().getId()== id);
-        }
-
-        return esta;
-    }
-    
-    public void modifica (Ingredientes p) {
-        //busca a si existe alguien con el id, y le actualiza el nombre
-        if (cabeza != null) {
-            //Si hay algo en la lista buscaré
-            Nodo aux = cabeza; //utilizo aux como indice
-            //Mientras no se acabe la lista y el elemento
-            //de la lista sea menor que el buscado
-            while (aux.getDato().getId() < p.getId()) {
-                aux = aux. getNext (); //avanzo en la lista
-            }
-            // Si lo encuentra hago el cambio
-            if (aux. getDato () .getId () == p.getId ()){
-                //Solo básta cambiar nombre
-                //cabeza = cabeza.getNext();
-                aux.getDato().setTipo(p.getTipo()) ;
-                aux.getBack().getDato().setTipo(p.getTipo());
-            }
-        }
-    } 
-    public void elimina (int id) {
-        //Si una persona tiene el id, lo elimina
-        if (cabeza != null) { //Si hay algo en la lista buscaré
-            if (cabeza.getDato().getId() == id) 
-            {
-                
-                cabeza.getNext().setBack(null);
-                cabeza = cabeza.getNext();
-            } 
-            else {
-                Nodo aux = cabeza; //utilizo aux como indice
-                //Mientras no se acabe la lista y el elemento
-                //de la lista sea menor que el buscado
-                while (aux. getNext () != null &&
-                    aux.getNext () .getDato () .getId() < id) {
-                    //aux = aux.getNext () ;
-                    aux.getNext().setBack(aux);
-                }
-                //avanzo en la lista
-            
-                // si es el de adelante lo borro
-                if (aux.getNext () .getDato () .getId () == id) {
-                    aux. setNext (aux.getNext () .getNext ()); //cambio las referencias
-                }
-            }
-        }
-    }
-    
-    public Ingredientes extrae (int id) {
-        Ingredientes p = null;
-        //si una persona tiene el id, lo extrae (eliminando y retornando)
-        if (cabeza != null) { //Si hay algo en la lista buscaré
-            if (cabeza.getDato () .getId () == id) {
-                cabeza = cabeza. getNext () ;
-            } else {
-                Nodo aux = cabeza; //utilizo aux como indice
-                //Mientras no se acabe la lista y el elemento
-                //de la lista sea menor que el buscado
-                while (aux.getNext() .getDato(). getId()
-                < id){
-                    aux = aux. getNext () ;
-                    //avanzo en la lista
-                }
-                // Si es el de adelante... quardo la persona y lo borro
-                if (aux. getNext () .getDato () .getId() == id) {
-                    p = aux. getNext () .getDato () ;
-                    aux. setNext (aux.getNext () .getNext () ) ;//cambio las referencias
-                }
-            }
-        }
-        return p;
-    }
-    
-     */
-    @Override
+    @Override //Para pruebas eliminar despues de pruebas
     public String toString() {
         Nodo aux = cabeza;
         String s = "Lista: ";
