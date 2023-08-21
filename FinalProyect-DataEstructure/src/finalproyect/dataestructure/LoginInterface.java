@@ -57,7 +57,7 @@ public class LoginInterface extends javax.swing.JFrame {
             }
         });
         jPanel2.add(startBtn);
-        startBtn.setBounds(340, 290, 157, 33);
+        startBtn.setBounds(340, 340, 157, 33);
 
         AboutBtn1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         AboutBtn1.setText("Sobre la App");
@@ -68,7 +68,7 @@ public class LoginInterface extends javax.swing.JFrame {
             }
         });
         jPanel2.add(AboutBtn1);
-        AboutBtn1.setBounds(690, 420, 103, 23);
+        AboutBtn1.setBounds(690, 420, 100, 23);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/LoginInterface-Background.jpg"))); // NOI18N
         jPanel2.add(jLabel2);

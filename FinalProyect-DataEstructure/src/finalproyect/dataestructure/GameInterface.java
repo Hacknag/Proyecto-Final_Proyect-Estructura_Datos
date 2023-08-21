@@ -9,12 +9,14 @@ package finalproyect.dataestructure;
 import COLAS.*;
 import LISTAS_CIRCULARES.*;
 import PILAS.*;
+import COLA_ORDENES.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+import java.util.Random;
 
 /**
  *
@@ -34,10 +36,15 @@ public class GameInterface extends javax.swing.JFrame {
         lis.inserta(new Ingredientes(4, ing.IngredienteAleatorio()));
         lis.inserta(new Ingredientes(5, ing.IngredienteAleatorio()));
 
+        //inserta las primeras 3 ordenes      
+        UpdateJLabelExample();
+
+        //asigna las primeras ordenes
         //asigna los labels de ingredientes
         actualizaringredientes();
         downTimer();
         timer.start();
+
     }
 
     //variables
@@ -52,6 +59,10 @@ public class GameInterface extends javax.swing.JFrame {
     Lista lis = new Lista();
     Ingredientes ing = new Ingredientes();
     Pila pilaPreparar = new Pila();
+    ColaO CO1 = new ColaO();
+    OrdenO OR1 = new OrdenO();
+    Random random = new Random();
+    MainCode MC1 = new MainCode();
 
     Ingredientes ingAux = new Ingredientes();
 
@@ -83,7 +94,122 @@ public class GameInterface extends javax.swing.JFrame {
 
         });
 
-    }//downTimer
+    }//downTimer       
+
+    public void UpdateJLabelExample() {
+        // Create a timer to update the label text every 5 seconds
+        CO1.encola(new NodoO(new OrdenO(random.nextInt(),
+                OR1.randomListOrdenes())));
+        Orden1.setText("Orden 1: " + CO1.ObtenerFrente());
+        Timer timer = new Timer(20000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (CO1.getLargo() == 1) {
+                    CO1.encola(new NodoO(new OrdenO(random.nextInt(),
+                            OR1.randomListOrdenes())));
+                    Orden2.setText("Orden 2: " + CO1.ObtenerSegundo());
+                } else if (CO1.getLargo() == 2) {
+                    CO1.encola(new NodoO(new OrdenO(random.nextInt(),
+                            OR1.randomListOrdenes())));
+                    Orden3.setText("Orden 3: " + CO1.ObtenerTercero());
+                }
+            }
+        });
+        timer.start();
+    }
+
+    public void AcceptedOrder() {
+        CO1.mueve();
+        Orden1.setText("Orden 1: " + CO1.ObtenerFrente());
+        Orden2.setText("Orden 2: " + CO1.ObtenerSegundo());
+        Orden3.setText("Orden 3: ");
+        Timer timer = new Timer(20000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CO1.encola(new NodoO(new OrdenO(random.nextInt(),
+                        OR1.randomListOrdenes())));
+                Orden3.setText("Orden 3: " + CO1.ObtenerTercero());
+            }
+        });
+        timer.start();
+    }
+
+    public void AcceptedHamburger() {
+        System.out.println(Orden1.getText());
+        if (Orden1.getText().equals("Orden 1: Hamburguesa de carne")) {
+            if (labelpreparar1.getText().equals("pan")
+                    && (labelpreparar2.getText().equals("carne"))
+                    && (labelpreparar3.getText().equals("pan"))) {
+                AcceptedOrder();
+                System.out.println("PAN&Carne");
+            } else {
+                JOptionPane.showMessageDialog(null, "La "
+                        + "hamburguesa contiene los ingredientes incorrectos");
+            }//Hamburgesa de Carne
+        } else if (Orden1.getText().equals("Orden 1: Hamburguesa con queso")) {
+            if (labelpreparar1.getText().equals("pan")
+                    && (labelpreparar2.getText().equals("carne"))
+                    && (labelpreparar3.getText().equals("queso"))
+                    && (labelpreparar4.getText().equals("pan"))) {
+                AcceptedOrder();
+                System.out.println("PAN&Carne&Queso");
+
+            } else if (labelpreparar1.getText().equals("pan")
+                    && (labelpreparar2.getText().equals("queso"))
+                    && (labelpreparar3.getText().equals("carne"))
+                    && (labelpreparar4.getText().equals("pan"))) {
+                AcceptedOrder();
+                System.out.println("PAN&Queso&Carne");
+
+            } else {
+                JOptionPane.showMessageDialog(null, "La "
+                        + "hamburguesa contiene los ingredientes incorrectos");
+            }//Hamburguesa con queso
+        } else if (Orden1.getText().equals("Orden 1: Hamburguesa clasica")) {
+            if (labelpreparar1.getText().equals("pan")
+                    && (labelpreparar2.getText().equals("lechuga"))
+                    && (labelpreparar3.getText().equals("carne"))
+                    && (labelpreparar4.getText().equals("queso"))
+                    && (labelpreparar5.getText().equals("pan"))) {
+                AcceptedOrder();
+                System.out.println("Pan&Lechuga&Carne&Queso");
+
+            } else if (labelpreparar1.getText().equals("pan")
+                    && (labelpreparar2.getText().equals("lechuga"))
+                    && (labelpreparar2.getText().equals("queso"))
+                    && (labelpreparar3.getText().equals("carne"))
+                    && (labelpreparar4.getText().equals("pan"))) {
+                AcceptedOrder();
+                System.out.println("Pan&Lechuga&Queso&Carne");
+
+            } else if (labelpreparar1.getText().equals("pan")
+                    && (labelpreparar2.getText().equals("queso"))
+                    && (labelpreparar3.getText().equals("carne"))
+                    && (labelpreparar4.getText().equals("lechuga"))
+                    && (labelpreparar5.getText().equals("pan"))) {
+                AcceptedOrder();
+                System.out.println("Pan&Queso&Carne&Lechuga");
+            } else if (labelpreparar1.getText().equals("pan")
+                    && (labelpreparar2.getText().equals("carne"))
+                    && (labelpreparar3.getText().equals("queso"))
+                    && (labelpreparar4.getText().equals("lechuga"))
+                    && (labelpreparar5.getText().equals("pan"))) {
+                AcceptedOrder();
+                System.out.println("Pan&Carne&Queso&Lechuga");
+            } else {
+                JOptionPane.showMessageDialog(null, "La "
+                        + "hamburguesa contiene los ingredientes incorrectos");
+            }
+        }
+    }
+
+    public void LimpiarHamburgesa() {
+        labelpreparar1.setText("");
+        labelpreparar2.setText("");
+        labelpreparar3.setText("");
+        labelpreparar4.setText("");
+        labelpreparar5.setText("");
+    }
 
     public void actualizaringredientes() {
         tiposIngredientes = lis.obtenerTiposIngredientes();
@@ -133,6 +259,8 @@ public class GameInterface extends javax.swing.JFrame {
                 break;
         }
 
+        //Inicio - Seccion de Ordenes 
+        //Final - Seccion de Ordenes 
     }//actualizar preparación
 
     /*-----------------------NO TOCAR------------------*/
@@ -148,7 +276,6 @@ public class GameInterface extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         TimerLbl = new javax.swing.JLabel();
         ingrediente5Label = new javax.swing.JLabel();
-        LabelBasurero = new javax.swing.JLabel();
         labelPlato = new javax.swing.JLabel();
         ingrediente2Label = new javax.swing.JLabel();
         ingrediente3Label = new javax.swing.JLabel();
@@ -159,8 +286,14 @@ public class GameInterface extends javax.swing.JFrame {
         labelpreparar5 = new javax.swing.JLabel();
         labelpreparar2 = new javax.swing.JLabel();
         labelpreparar1 = new javax.swing.JLabel();
-        ButtonEntregar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        OkBtn = new javax.swing.JButton();
+        Orden3 = new javax.swing.JLabel();
+        Orden2 = new javax.swing.JLabel();
+        Orden1 = new javax.swing.JLabel();
+        backBtn = new javax.swing.JButton();
+        LimpiarBtn = new javax.swing.JButton();
+        LblBasurero = new javax.swing.JButton();
+        Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -171,33 +304,20 @@ public class GameInterface extends javax.swing.JFrame {
         TimerLbl.setFont(new java.awt.Font("Segoe UI Black", 2, 14)); // NOI18N
         TimerLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         TimerLbl.setText("Timer");
-        TimerLbl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         jPanel1.add(TimerLbl);
         TimerLbl.setBounds(710, 10, 80, 40);
 
         ingrediente5Label.setForeground(new java.awt.Color(255, 255, 255));
-        ingrediente5Label.setText("jLabel2");
+        ingrediente5Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ingrediente5Label.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(12, 104, 12), 2, true));
+        ingrediente5Label.setPreferredSize(new java.awt.Dimension(80, 30));
         ingrediente5Label.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ingrediente5LabelMouseClicked(evt);
             }
         });
         jPanel1.add(ingrediente5Label);
-        ingrediente5Label.setBounds(730, 250, 37, 16);
-
-        LabelBasurero.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        LabelBasurero.setForeground(new java.awt.Color(204, 0, 0));
-        LabelBasurero.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelBasurero.setText("           Basurero");
-        LabelBasurero.setToolTipText("");
-        LabelBasurero.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        LabelBasurero.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                LabelBasureroMouseClicked(evt);
-            }
-        });
-        jPanel1.add(LabelBasurero);
-        LabelBasurero.setBounds(600, 350, 200, 90);
+        ingrediente5Label.setBounds(500, 340, 80, 30);
 
         labelPlato.setBackground(new java.awt.Color(255, 255, 255));
         labelPlato.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -209,95 +329,173 @@ public class GameInterface extends javax.swing.JFrame {
             }
         });
         jPanel1.add(labelPlato);
-        labelPlato.setBounds(220, 240, 80, 20);
+        labelPlato.setBounds(340, 260, 80, 20);
 
         ingrediente2Label.setForeground(new java.awt.Color(255, 255, 255));
-        ingrediente2Label.setText("jLabel2");
+        ingrediente2Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ingrediente2Label.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(12, 104, 12), 2, true));
+        ingrediente2Label.setPreferredSize(new java.awt.Dimension(80, 30));
         ingrediente2Label.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ingrediente2LabelMouseClicked(evt);
             }
         });
         jPanel1.add(ingrediente2Label);
-        ingrediente2Label.setBounds(580, 250, 37, 16);
+        ingrediente2Label.setBounds(230, 340, 80, 30);
 
         ingrediente3Label.setForeground(new java.awt.Color(255, 255, 255));
-        ingrediente3Label.setText("jLabel2");
+        ingrediente3Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ingrediente3Label.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(12, 104, 12), 2, true));
+        ingrediente3Label.setPreferredSize(new java.awt.Dimension(80, 30));
         ingrediente3Label.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ingrediente3LabelMouseClicked(evt);
             }
         });
         jPanel1.add(ingrediente3Label);
-        ingrediente3Label.setBounds(630, 250, 37, 16);
+        ingrediente3Label.setBounds(320, 340, 80, 30);
 
         ingrediente4Label.setForeground(new java.awt.Color(255, 255, 255));
-        ingrediente4Label.setText("jLabel2");
+        ingrediente4Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ingrediente4Label.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(12, 104, 12), 2, true));
+        ingrediente4Label.setPreferredSize(new java.awt.Dimension(80, 30));
         ingrediente4Label.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ingrediente4LabelMouseClicked(evt);
             }
         });
         jPanel1.add(ingrediente4Label);
-        ingrediente4Label.setBounds(680, 250, 37, 16);
+        ingrediente4Label.setBounds(410, 340, 80, 30);
 
         ingrediente1Label.setForeground(new java.awt.Color(255, 255, 255));
-        ingrediente1Label.setText("jLabel2");
+        ingrediente1Label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ingrediente1Label.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(12, 104, 12), 2, true));
+        ingrediente1Label.setPreferredSize(new java.awt.Dimension(80, 30));
         ingrediente1Label.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ingrediente1LabelMouseClicked(evt);
             }
         });
         jPanel1.add(ingrediente1Label);
-        ingrediente1Label.setBounds(530, 250, 37, 16);
+        ingrediente1Label.setBounds(140, 340, 80, 30);
 
         labelpreparar4.setBackground(new java.awt.Color(255, 255, 255));
         labelpreparar4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelpreparar4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(labelpreparar4);
-        labelpreparar4.setBounds(240, 132, 50, 20);
+        labelpreparar4.setBounds(350, 140, 50, 20);
 
         labelpreparar3.setBackground(new java.awt.Color(255, 255, 255));
         labelpreparar3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelpreparar3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(labelpreparar3);
-        labelpreparar3.setBounds(240, 162, 50, 20);
+        labelpreparar3.setBounds(350, 170, 50, 20);
 
         labelpreparar5.setBackground(new java.awt.Color(255, 255, 51));
         labelpreparar5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelpreparar5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(labelpreparar5);
-        labelpreparar5.setBounds(240, 102, 50, 20);
+        labelpreparar5.setBounds(350, 110, 50, 20);
 
         labelpreparar2.setBackground(new java.awt.Color(255, 255, 255));
         labelpreparar2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelpreparar2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(labelpreparar2);
-        labelpreparar2.setBounds(240, 192, 50, 20);
+        labelpreparar2.setBounds(350, 200, 50, 20);
 
         labelpreparar1.setBackground(new java.awt.Color(255, 255, 255));
         labelpreparar1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         labelpreparar1.setForeground(new java.awt.Color(255, 255, 153));
         labelpreparar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.add(labelpreparar1);
-        labelpreparar1.setBounds(240, 232, 50, 20);
+        labelpreparar1.setBounds(350, 230, 50, 20);
 
-        ButtonEntregar.setBackground(new java.awt.Color(153, 0, 51));
-        ButtonEntregar.setFont(new java.awt.Font("Segoe UI Black", 0, 12)); // NOI18N
-        ButtonEntregar.setForeground(new java.awt.Color(255, 255, 255));
-        ButtonEntregar.setText("Entregar");
-        ButtonEntregar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 0, 0)));
-        ButtonEntregar.addActionListener(new java.awt.event.ActionListener() {
+        OkBtn.setBackground(new java.awt.Color(255, 51, 51));
+        OkBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        OkBtn.setForeground(new java.awt.Color(255, 255, 255));
+        OkBtn.setText("Entregar");
+        OkBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        OkBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonEntregarActionPerformed(evt);
+                OkBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(ButtonEntregar);
-        ButtonEntregar.setBounds(190, 280, 170, 30);
+        jPanel1.add(OkBtn);
+        OkBtn.setBounds(710, 170, 74, 23);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/GameBackground.PNG"))); // NOI18N
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(0, 0, 800, 450);
+        Orden3.setBackground(new java.awt.Color(255, 51, 51));
+        Orden3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Orden3.setForeground(new java.awt.Color(255, 255, 255));
+        Orden3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Orden3.setText("Orden 3");
+        Orden3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Orden3.setOpaque(true);
+        Orden3.setPreferredSize(new java.awt.Dimension(70, 20));
+        jPanel1.add(Orden3);
+        Orden3.setBounds(20, 10, 220, 20);
+
+        Orden2.setBackground(new java.awt.Color(255, 51, 51));
+        Orden2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Orden2.setForeground(new java.awt.Color(255, 255, 255));
+        Orden2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Orden2.setText("Orden 2");
+        Orden2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Orden2.setOpaque(true);
+        Orden2.setPreferredSize(new java.awt.Dimension(70, 20));
+        jPanel1.add(Orden2);
+        Orden2.setBounds(20, 40, 220, 20);
+
+        Orden1.setBackground(new java.awt.Color(255, 51, 51));
+        Orden1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Orden1.setForeground(new java.awt.Color(255, 255, 255));
+        Orden1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Orden1.setText("Orden 1");
+        Orden1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Orden1.setOpaque(true);
+        Orden1.setPreferredSize(new java.awt.Dimension(170, 20));
+        jPanel1.add(Orden1);
+        Orden1.setBounds(20, 70, 220, 20);
+
+        backBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        backBtn.setText("Volver");
+        backBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(backBtn);
+        backBtn.setBounds(10, 420, 70, 23);
+
+        LimpiarBtn.setBackground(java.awt.Color.white);
+        LimpiarBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LimpiarBtn.setForeground(java.awt.Color.black);
+        LimpiarBtn.setText("Limpiar Plato");
+        LimpiarBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        LimpiarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LimpiarBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(LimpiarBtn);
+        LimpiarBtn.setBounds(10, 280, 100, 23);
+
+        LblBasurero.setBackground(new java.awt.Color(255, 51, 51));
+        LblBasurero.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        LblBasurero.setForeground(new java.awt.Color(255, 255, 255));
+        LblBasurero.setText("Basurero");
+        LblBasurero.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        LblBasurero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LblBasureroActionPerformed(evt);
+            }
+        });
+        jPanel1.add(LblBasurero);
+        LblBasurero.setBounds(700, 380, 74, 23);
+
+        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/GameBackground.PNG"))); // NOI18N
+        jPanel1.add(Background);
+        Background.setBounds(0, 0, 800, 450);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -313,51 +511,39 @@ public class GameInterface extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void LabelBasureroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LabelBasureroMouseClicked
-        // TODO add your handling code here:
-        if (ingAux.getTipo() != null) {
-            lis.botar(ingAux);
-            lis.mueveIzq();
-            lis.contarIngredientesNoVacios();
-            actualizaringredientes();
-            ingAux = new Ingredientes();
-        }
-
-    }//GEN-LAST:event_LabelBasureroMouseClicked
-
     private void ingrediente1LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingrediente1LabelMouseClicked
         // TODO add your handling code here:
         ingAux.setId(Integer.parseInt(tiposIngredientes[0][0]));
         ingAux.setTipo(tiposIngredientes[0][1]);
-        JOptionPane.showMessageDialog(null, ingAux);
+        //JOptionPane.showMessageDialog(null, ingAux);
     }//GEN-LAST:event_ingrediente1LabelMouseClicked
 
     private void ingrediente2LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingrediente2LabelMouseClicked
         // TODO add your handling code here:
         ingAux.setId(Integer.parseInt(tiposIngredientes[1][0]));
         ingAux.setTipo(tiposIngredientes[1][1]);
-        JOptionPane.showMessageDialog(null, ingAux);
+        //JOptionPane.showMessageDialog(null, ingAux);
     }//GEN-LAST:event_ingrediente2LabelMouseClicked
 
     private void ingrediente3LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingrediente3LabelMouseClicked
         // TODO add your handling code here:
         ingAux.setId(Integer.parseInt(tiposIngredientes[2][0]));
         ingAux.setTipo(tiposIngredientes[2][1]);
-        JOptionPane.showMessageDialog(null, ingAux);
+        //JOptionPane.showMessageDialog(null, ingAux);
     }//GEN-LAST:event_ingrediente3LabelMouseClicked
 
     private void ingrediente4LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingrediente4LabelMouseClicked
         // TODO add your handling code here:
         ingAux.setId(Integer.parseInt(tiposIngredientes[3][0]));
         ingAux.setTipo(tiposIngredientes[3][1]);
-        JOptionPane.showMessageDialog(null, ingAux);
+        //JOptionPane.showMessageDialog(null, ingAux);
     }//GEN-LAST:event_ingrediente4LabelMouseClicked
 
     private void ingrediente5LabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ingrediente5LabelMouseClicked
         // TODO add your handling code here:
         ingAux.setId(Integer.parseInt(tiposIngredientes[4][0]));
         ingAux.setTipo(tiposIngredientes[4][1]);
-        JOptionPane.showMessageDialog(null, ingAux);
+        //JOptionPane.showMessageDialog(null, ingAux);
     }//GEN-LAST:event_ingrediente5LabelMouseClicked
 
     private void labelPlatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelPlatoMouseClicked
@@ -379,14 +565,34 @@ public class GameInterface extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_labelPlatoMouseClicked
 
-    private void ButtonEntregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEntregarActionPerformed
+    private void OkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkBtnActionPerformed
         // TODO add your handling code here:
+        AcceptedHamburger();
 
-        if (!pilaPreparar.Vacia()) {
-            pilaPreparar = new Pila();
-            actualizarpreparacion();
+    }//GEN-LAST:event_OkBtnActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        // TODO add your handling code here:
+        LoginInterface LI1 = new LoginInterface();
+        LI1.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_backBtnActionPerformed
+
+    private void LimpiarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarBtnActionPerformed
+        // TODO add your handling code here:
+        LimpiarHamburgesa();
+    }//GEN-LAST:event_LimpiarBtnActionPerformed
+
+    private void LblBasureroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LblBasureroActionPerformed
+        // TODO add your handling code here:
+        if (ingAux.getTipo() != null) {
+            lis.botar(ingAux);
+            lis.mueveIzq();
+            lis.contarIngredientesNoVacios();
+            actualizaringredientes();
+            ingAux = new Ingredientes();
         }
-    }//GEN-LAST:event_ButtonEntregarActionPerformed
+    }//GEN-LAST:event_LblBasureroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -424,15 +630,20 @@ public class GameInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ButtonEntregar;
-    private javax.swing.JLabel LabelBasurero;
+    private javax.swing.JLabel Background;
+    private javax.swing.JButton LblBasurero;
+    private javax.swing.JButton LimpiarBtn;
+    private javax.swing.JButton OkBtn;
+    private javax.swing.JLabel Orden1;
+    private javax.swing.JLabel Orden2;
+    private javax.swing.JLabel Orden3;
     private javax.swing.JLabel TimerLbl;
+    private javax.swing.JButton backBtn;
     private javax.swing.JLabel ingrediente1Label;
     private javax.swing.JLabel ingrediente2Label;
     private javax.swing.JLabel ingrediente3Label;
     private javax.swing.JLabel ingrediente4Label;
     private javax.swing.JLabel ingrediente5Label;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelPlato;
     private javax.swing.JLabel labelpreparar1;
