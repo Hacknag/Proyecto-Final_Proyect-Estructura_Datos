@@ -43,6 +43,17 @@ public class Pila {
         }
         this.largo++;
     }
+    
+    
+        public Ingredientes pop(){
+        Ingredientes personaAEliminar = null;
+        if (!Vacia()) {
+            personaAEliminar = this.cima.getValor();
+            this.cima = this.cima.getSiguiente();
+            this.largo--;
+        }
+        return personaAEliminar;
+    }
 
 
 

@@ -55,6 +55,7 @@ public class GameInterface extends javax.swing.JFrame {
     int minute = 5;
     String ddSecond, ddMinute;
     DecimalFormat dFormat = new DecimalFormat("00");
+    int puntaje = 0;
 
     Lista lis = new Lista();
     Ingredientes ing = new Ingredientes();
@@ -141,38 +142,48 @@ public class GameInterface extends javax.swing.JFrame {
                     && (labelpreparar2.getText().equals("carne"))
                     && (labelpreparar3.getText().equals("pan"))) {
                 AcceptedOrder();
-                System.out.println("PAN&Carne");
+                puntaje = puntaje + 5;
+                puntajeLbl.setText(Integer.toString(puntaje)
+                        + " puntos acomulados");
             } else {
-                JOptionPane.showMessageDialog(null, "La "
-                        + "hamburguesa contiene los ingredientes incorrectos");
+                System.out.println("La hamburgesa contiene los ingredientes"
+                        + "incorrectos");
             }//Hamburgesa de Carne
-        } else if (Orden1.getText().equals("Orden 1: Hamburguesa con queso")) {
+        } else if (Orden1.getText().equals("Orden 1: Hamburguesa"
+                + " con queso")) {
             if (labelpreparar1.getText().equals("pan")
                     && (labelpreparar2.getText().equals("carne"))
                     && (labelpreparar3.getText().equals("queso"))
                     && (labelpreparar4.getText().equals("pan"))) {
                 AcceptedOrder();
-                System.out.println("PAN&Carne&Queso");
+                puntaje = puntaje + 10;
+                puntajeLbl.setText(Integer.toString(puntaje)
+                        + " puntos acomulados");
 
             } else if (labelpreparar1.getText().equals("pan")
                     && (labelpreparar2.getText().equals("queso"))
                     && (labelpreparar3.getText().equals("carne"))
                     && (labelpreparar4.getText().equals("pan"))) {
                 AcceptedOrder();
-                System.out.println("PAN&Queso&Carne");
+                puntaje = puntaje + 10;
+                puntajeLbl.setText(Integer.toString(puntaje)
+                        + " puntos acomulados");
 
             } else {
-                JOptionPane.showMessageDialog(null, "La "
-                        + "hamburguesa contiene los ingredientes incorrectos");
+                System.out.println("La hamburgesa contiene los ingredientes"
+                        + "incorrectos");
             }//Hamburguesa con queso
-        } else if (Orden1.getText().equals("Orden 1: Hamburguesa clasica")) {
+        } else if (Orden1.getText().equals("Orden 1: Hamburguesa"
+                + " clasica")) {
             if (labelpreparar1.getText().equals("pan")
                     && (labelpreparar2.getText().equals("lechuga"))
                     && (labelpreparar3.getText().equals("carne"))
                     && (labelpreparar4.getText().equals("queso"))
                     && (labelpreparar5.getText().equals("pan"))) {
                 AcceptedOrder();
-                System.out.println("Pan&Lechuga&Carne&Queso");
+                puntaje = puntaje + 15;
+                puntajeLbl.setText(Integer.toString(puntaje)
+                        + " puntos acomulados");
 
             } else if (labelpreparar1.getText().equals("pan")
                     && (labelpreparar2.getText().equals("lechuga"))
@@ -180,7 +191,9 @@ public class GameInterface extends javax.swing.JFrame {
                     && (labelpreparar3.getText().equals("carne"))
                     && (labelpreparar4.getText().equals("pan"))) {
                 AcceptedOrder();
-                System.out.println("Pan&Lechuga&Queso&Carne");
+                puntaje = puntaje + 15;
+                puntajeLbl.setText(Integer.toString(puntaje)
+                        + " puntos acomulados");
 
             } else if (labelpreparar1.getText().equals("pan")
                     && (labelpreparar2.getText().equals("queso"))
@@ -188,19 +201,27 @@ public class GameInterface extends javax.swing.JFrame {
                     && (labelpreparar4.getText().equals("lechuga"))
                     && (labelpreparar5.getText().equals("pan"))) {
                 AcceptedOrder();
-                System.out.println("Pan&Queso&Carne&Lechuga");
+                puntaje = puntaje + 15;
+                puntajeLbl.setText(Integer.toString(puntaje)
+                        + " puntos acomulados");
             } else if (labelpreparar1.getText().equals("pan")
                     && (labelpreparar2.getText().equals("carne"))
                     && (labelpreparar3.getText().equals("queso"))
                     && (labelpreparar4.getText().equals("lechuga"))
                     && (labelpreparar5.getText().equals("pan"))) {
                 AcceptedOrder();
-                System.out.println("Pan&Carne&Queso&Lechuga");
+                puntaje = puntaje + 15;
+                puntajeLbl.setText(Integer.toString(puntaje)
+                        + " puntos acomulados");
             } else {
-                JOptionPane.showMessageDialog(null, "La "
-                        + "hamburguesa contiene los ingredientes incorrectos");
+                System.out.println("La hamburgesa contiene los ingredientes"
+                        + "incorrectos");
             }
         }
+    }
+
+    public void puntaje() {
+        puntajeLbl.setText(Integer.toString(puntaje));
     }
 
     public void LimpiarHamburgesa() {
@@ -293,6 +314,7 @@ public class GameInterface extends javax.swing.JFrame {
         backBtn = new javax.swing.JButton();
         LimpiarBtn = new javax.swing.JButton();
         LblBasurero = new javax.swing.JButton();
+        puntajeLbl = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -493,6 +515,16 @@ public class GameInterface extends javax.swing.JFrame {
         jPanel1.add(LblBasurero);
         LblBasurero.setBounds(700, 380, 74, 23);
 
+        puntajeLbl.setBackground(java.awt.Color.orange);
+        puntajeLbl.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        puntajeLbl.setForeground(java.awt.Color.black);
+        puntajeLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        puntajeLbl.setText("0 puntos");
+        puntajeLbl.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        puntajeLbl.setOpaque(true);
+        jPanel1.add(puntajeLbl);
+        puntajeLbl.setBounds(520, 20, 180, 24);
+
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/GameBackground.PNG"))); // NOI18N
         jPanel1.add(Background);
         Background.setBounds(0, 0, 800, 450);
@@ -581,6 +613,10 @@ public class GameInterface extends javax.swing.JFrame {
     private void LimpiarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LimpiarBtnActionPerformed
         // TODO add your handling code here:
         LimpiarHamburgesa();
+        while (!pilaPreparar.Vacia()) {
+            pilaPreparar.pop();
+        }
+
     }//GEN-LAST:event_LimpiarBtnActionPerformed
 
     private void LblBasureroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LblBasureroActionPerformed
@@ -651,5 +687,6 @@ public class GameInterface extends javax.swing.JFrame {
     private javax.swing.JLabel labelpreparar3;
     private javax.swing.JLabel labelpreparar4;
     private javax.swing.JLabel labelpreparar5;
+    private javax.swing.JLabel puntajeLbl;
     // End of variables declaration//GEN-END:variables
 }
