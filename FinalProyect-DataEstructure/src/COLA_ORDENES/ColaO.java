@@ -29,18 +29,24 @@ public class ColaO {
     public void setLargo(int largo) {
         this.largo = largo;
     }
-    
+
     Random random = new Random();
     OrdenO OR1 = new OrdenO();
+
     public void encola(NodoO nuevoNodo) {
-        if (frente == null) {  // significa que la cola esta vacia
-            frente = nuevoNodo;
-            ultimo = nuevoNodo;
+        if (largo == 3) {
+            //no se encola ya que solo pueden haber 3 ordenes
         } else {
-            ultimo.setAtras(nuevoNodo);
-            ultimo = nuevoNodo;
+            if (frente == null) {  // significa que la cola esta vacia
+                frente = nuevoNodo;
+                ultimo = nuevoNodo;
+            } else {
+                ultimo.setAtras(nuevoNodo);
+                ultimo = nuevoNodo;
+            }
+            largo++;
         }
-        largo++;
+
     }
 
     //este se cambia
@@ -74,15 +80,22 @@ public class ColaO {
 
     public void mueve() {
         //Para que la pila gire al utilizar un ingrediente
-        if (frente != null) {
-            NodoO Primero = frente;
-            NodoO Segundo = frente.getAtras();
-            NodoO Tercero = frente.getAtras().getAtras();
+        try {
+            System.out.println(ObtenerFrente());
+            System.out.println(ObtenerSegundo());
+            if (frente != null) {
+                NodoO Primero = frente;
+                NodoO Segundo = frente.getAtras();
+                NodoO Tercero = frente.getAtras().getAtras();
 
-            frente = Segundo;
-            Segundo.setAtras(Tercero);
-            largo--;
+                frente = Segundo;
+                Segundo.setAtras(Tercero);
+                largo--;
+            }
+        } catch (Exception ex) {
+
         }
+
     }
 
     public String ObtenerFrente() {
@@ -91,13 +104,23 @@ public class ColaO {
     }
 
     public String ObtenerSegundo() {
-        String dato = frente.getAtras().getDato().getDescripcion();
-        return dato;
+        try {
+            String dato = frente.getAtras().getDato().getDescripcion();
+            return dato;
+        } catch (Exception ex) {
+            return " ";
+        }
+
     }
 
     public String ObtenerTercero() {
-        String dato = frente.getAtras().getAtras().getDato().getDescripcion();
-        return dato;
+        try {
+            String dato = frente.getAtras().getAtras().getDato().getDescripcion();
+            return dato;
+        } catch (Exception ex) {
+            return " ";
+        }
+
     }
 
     public String imprimir() {

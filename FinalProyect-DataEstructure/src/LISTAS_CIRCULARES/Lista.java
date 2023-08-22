@@ -58,7 +58,7 @@ public class Lista {
         } while (actual != cabeza);
     }
     
-        System.out.println(contador);
+        //System.out.println(contador);
 
     // Si hay 3 o menos nodos con tipo "vacio", asignar tipos aleatorios
     if (contador ==2) {

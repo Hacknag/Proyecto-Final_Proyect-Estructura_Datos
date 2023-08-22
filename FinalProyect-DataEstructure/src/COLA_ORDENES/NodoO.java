@@ -27,7 +27,10 @@ public class NodoO {
     }
 
     public NodoO getAtras() {
-        return atras;
+        if(atras==null)
+            return null;
+        else
+            return atras;
     }
 
     public void setAtras(NodoO atras) {

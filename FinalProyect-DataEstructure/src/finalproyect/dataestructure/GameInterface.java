@@ -17,6 +17,8 @@ import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,6 +28,7 @@ public class GameInterface extends javax.swing.JFrame {
 
     public GameInterface() {
         initComponents();
+        
         this.setLocationRelativeTo(null);
         TimerLbl.setText("05:00");
 
@@ -52,6 +55,7 @@ public class GameInterface extends javax.swing.JFrame {
     String[] ingPreparacion;
     Timer timer;
     int second = 0;
+    int contOrdenes = 0;
     int minute = 5;
     String ddSecond, ddMinute;
     DecimalFormat dFormat = new DecimalFormat("00");
@@ -64,6 +68,7 @@ public class GameInterface extends javax.swing.JFrame {
     OrdenO OR1 = new OrdenO();
     Random random = new Random();
     MainCode MC1 = new MainCode();
+    
 
     Ingredientes ingAux = new Ingredientes();
 
@@ -74,11 +79,14 @@ public class GameInterface extends javax.swing.JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+               
                 second--;
+                contOrdenes++;
                 ddSecond = dFormat.format(second);
                 ddMinute = dFormat.format(minute);
                 TimerLbl.setText(ddMinute + ":" + ddSecond);
 
+                
                 if (second == -1) {
                     second = 59;
                     minute--;
@@ -86,10 +94,22 @@ public class GameInterface extends javax.swing.JFrame {
                     ddMinute = dFormat.format(minute);
                     TimerLbl.setText(ddMinute + ":" + ddSecond);
                 }//if
-                if (minute == 0 && second == 0) {
+                if (minute == 00 && second == 00) {
+                   
                     timer.stop();
-
-                    System.exit(0);
+                    
+                    
+                    
+                    
+                    
+                    try {
+                        Thread.sleep(5000);
+                        System.exit(0);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(GameInterface.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    
                 }
             }
 
@@ -119,20 +139,15 @@ public class GameInterface extends javax.swing.JFrame {
         timer.start();
     }
 
-    public void AcceptedOrder() {
-        CO1.mueve();
+    public void ActualizarOrdenes(){
         Orden1.setText("Orden 1: " + CO1.ObtenerFrente());
         Orden2.setText("Orden 2: " + CO1.ObtenerSegundo());
-        Orden3.setText("Orden 3: ");
-        Timer timer = new Timer(20000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                CO1.encola(new NodoO(new OrdenO(random.nextInt(),
-                        OR1.randomListOrdenes())));
-                Orden3.setText("Orden 3: " + CO1.ObtenerTercero());
-            }
-        });
-        timer.start();
+        Orden3.setText("Orden 3: " + CO1.ObtenerTercero());
+    }
+    
+    public void AcceptedOrder() {
+        CO1.mueve();
+        ActualizarOrdenes();
     }
 
     public void AcceptedHamburger() {
@@ -142,12 +157,14 @@ public class GameInterface extends javax.swing.JFrame {
                     && (labelpreparar2.getText().equals("carne"))
                     && (labelpreparar3.getText().equals("pan"))) {
                 AcceptedOrder();
+                LimpiarHamburgesa();
                 puntaje = puntaje + 5;
                 puntajeLbl.setText(Integer.toString(puntaje)
                         + " puntos acomulados");
             } else {
                 System.out.println("La hamburgesa contiene los ingredientes"
                         + "incorrectos");
+                LimpiarHamburgesa();
             }//Hamburgesa de Carne
         } else if (Orden1.getText().equals("Orden 1: Hamburguesa"
                 + " con queso")) {
@@ -156,6 +173,7 @@ public class GameInterface extends javax.swing.JFrame {
                     && (labelpreparar3.getText().equals("queso"))
                     && (labelpreparar4.getText().equals("pan"))) {
                 AcceptedOrder();
+                LimpiarHamburgesa();
                 puntaje = puntaje + 10;
                 puntajeLbl.setText(Integer.toString(puntaje)
                         + " puntos acomulados");
@@ -165,6 +183,7 @@ public class GameInterface extends javax.swing.JFrame {
                     && (labelpreparar3.getText().equals("carne"))
                     && (labelpreparar4.getText().equals("pan"))) {
                 AcceptedOrder();
+                LimpiarHamburgesa();
                 puntaje = puntaje + 10;
                 puntajeLbl.setText(Integer.toString(puntaje)
                         + " puntos acomulados");
@@ -172,6 +191,7 @@ public class GameInterface extends javax.swing.JFrame {
             } else {
                 System.out.println("La hamburgesa contiene los ingredientes"
                         + "incorrectos");
+                LimpiarHamburgesa();
             }//Hamburguesa con queso
         } else if (Orden1.getText().equals("Orden 1: Hamburguesa"
                 + " clasica")) {
@@ -181,6 +201,7 @@ public class GameInterface extends javax.swing.JFrame {
                     && (labelpreparar4.getText().equals("queso"))
                     && (labelpreparar5.getText().equals("pan"))) {
                 AcceptedOrder();
+                LimpiarHamburgesa();
                 puntaje = puntaje + 15;
                 puntajeLbl.setText(Integer.toString(puntaje)
                         + " puntos acomulados");
@@ -191,6 +212,7 @@ public class GameInterface extends javax.swing.JFrame {
                     && (labelpreparar3.getText().equals("carne"))
                     && (labelpreparar4.getText().equals("pan"))) {
                 AcceptedOrder();
+                LimpiarHamburgesa();
                 puntaje = puntaje + 15;
                 puntajeLbl.setText(Integer.toString(puntaje)
                         + " puntos acomulados");
@@ -201,6 +223,7 @@ public class GameInterface extends javax.swing.JFrame {
                     && (labelpreparar4.getText().equals("lechuga"))
                     && (labelpreparar5.getText().equals("pan"))) {
                 AcceptedOrder();
+                LimpiarHamburgesa();
                 puntaje = puntaje + 15;
                 puntajeLbl.setText(Integer.toString(puntaje)
                         + " puntos acomulados");
@@ -216,6 +239,7 @@ public class GameInterface extends javax.swing.JFrame {
             } else {
                 System.out.println("La hamburgesa contiene los ingredientes"
                         + "incorrectos");
+                LimpiarHamburgesa();
             }
         }
     }
@@ -230,6 +254,8 @@ public class GameInterface extends javax.swing.JFrame {
         labelpreparar3.setText("");
         labelpreparar4.setText("");
         labelpreparar5.setText("");
+        pilaPreparar = new Pila();
+        actualizarpreparacion();
     }
 
     public void actualizaringredientes() {
@@ -243,7 +269,7 @@ public class GameInterface extends javax.swing.JFrame {
     }//actualizar ingredientes
 
     public void actualizarpreparacion() {
-        pilaPreparar.listar(); //Para pruebas
+        //pilaPreparar.listar(); //Para pruebas
         ingPreparacion = pilaPreparar.obtenerIngredientespreparacion();
         switch (ingPreparacion.length) {
             case 1:
@@ -489,9 +515,7 @@ public class GameInterface extends javax.swing.JFrame {
         jPanel1.add(backBtn);
         backBtn.setBounds(10, 420, 70, 23);
 
-        LimpiarBtn.setBackground(java.awt.Color.white);
         LimpiarBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        LimpiarBtn.setForeground(java.awt.Color.black);
         LimpiarBtn.setText("Limpiar Plato");
         LimpiarBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         LimpiarBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -517,7 +541,6 @@ public class GameInterface extends javax.swing.JFrame {
 
         puntajeLbl.setBackground(java.awt.Color.orange);
         puntajeLbl.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        puntajeLbl.setForeground(java.awt.Color.black);
         puntajeLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         puntajeLbl.setText("0 puntos");
         puntajeLbl.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
